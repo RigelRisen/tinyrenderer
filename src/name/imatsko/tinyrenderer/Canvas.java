@@ -35,11 +35,11 @@ public class Canvas extends ImageBuffer {
     }
 
     @Override
-    public void setPixel(int x, int y, int r, int g, int b) {
+    public void setPixel(int x, int y, Color color) {
         if(coord_origin == LEFT_TOP) {
-            super.setRawPixel(x, y, r, g, b);
+            super.setPixel(x, y, color);
         } else if(coord_origin == LEFT_BOTTOM) {
-            super.setRawPixel(x, height-1 - y, r, g, b);
+            super.setPixel(x, height - 1 - y, color);
         } else {
             throw new IllegalArgumentException("Illegal coordinate origin");
         }
@@ -57,7 +57,7 @@ public class Canvas extends ImageBuffer {
 
     }
 
-    public void drawLine(int x1, int y1, int x2, int y2, int r, int g, int b) {
+    public void drawLine(int x1, int y1, int x2, int y2, Color color) {
         checkCoordinateBoundaries(x1, y1);
         checkCoordinateBoundaries(x2, y2);
         int deltaX = Math.abs(x1-x2);
@@ -97,7 +97,7 @@ public class Canvas extends ImageBuffer {
         int y = y1;
         for (int x = x1; x <= x2; x++)
         {
-            setPixel(steep ? y : x, steep ? x : y, r, g, b); // Не забываем вернуть координаты на место
+            setPixel(steep ? y : x, steep ? x : y, color); // Не забываем вернуть координаты на место
             error -= dy;
             if (error < 0)
             {

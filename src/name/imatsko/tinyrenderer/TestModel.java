@@ -29,8 +29,6 @@ public class TestModel {
 
         Model model = ObjModelLoader.loadFromFile("african_head.obj");
 
-
-
         for(int faceNum = 0; faceNum < model.getFacesNum(); faceNum++) {
             Model.Face face = model.getFace(faceNum);
             for (int j = 0; j < 3; j++) {
@@ -42,7 +40,7 @@ public class TestModel {
                 int y1 = (int) ((v1.get(1)+1)*height/2);
                 int y2 = (int) ((v2.get(1)+1)*height/2);
                 try {
-                    newImage.drawLine(x1, y1, x2, y2, 200, 200, 200);
+                    newImage.drawLine(x1, y1, x2, y2, new ColorRGB(200, 200, 200));
                 } catch (IndexOutOfBoundsException e) {
 //                  skip case when points are out of image size
                 }
@@ -52,7 +50,7 @@ public class TestModel {
         try(OutputStream outFile = new FileOutputStream("head.tga")) {
 //                TGAFormat.write(outFile2, readBuffer, TGAFormat.UNCOMPRESSED_RGB);
             TGAFormat.write(outFile, newImage, TGAFormat.RUNLENGTH_ENC_RGB);
-            System.out.println("line file written");
+            System.out.println("head file written");
         }
     }
 }

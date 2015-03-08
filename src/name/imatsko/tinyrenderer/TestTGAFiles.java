@@ -6,7 +6,7 @@ public class TestTGAFiles {
 
     public static void main(String[] args) throws IOException {
         ImageBuffer newImage = new ImageBuffer(100,100);
-        newImage.setRawPixel(50, 50, 255, 0, 0);
+        newImage.setPixel(50, 50, ColorRGB.RED);
 
         try (OutputStream outFile = new FileOutputStream("test.tga")) {
 //            TGAFormat.write(outFile, newImage, TGAFormat.UNCOMPRESSED_RGB);
@@ -16,10 +16,10 @@ public class TestTGAFiles {
 
         try (InputStream inFile = new FileInputStream("test.tga")) {
             ImageBuffer readBuffer = TGAFormat.read(inFile);
-            readBuffer.setRawPixel(55, 55, 255, 0, 0);
-            readBuffer.setRawPixel(45, 55, 255, 0, 0);
-            readBuffer.setRawPixel(55, 45, 255, 0, 0);
-            readBuffer.setRawPixel(45, 45, 255, 0, 0);
+            readBuffer.setPixel(55, 55, ColorRGB.RED);
+            readBuffer.setPixel(45, 55, ColorRGB.RED);
+            readBuffer.setPixel(55, 45, ColorRGB.RED);
+            readBuffer.setPixel(45, 45, ColorRGB.RED);
 
             try(OutputStream outFile2 = new FileOutputStream("test2.tga")) {
 //                TGAFormat.write(outFile2, readBuffer, TGAFormat.UNCOMPRESSED_RGB);

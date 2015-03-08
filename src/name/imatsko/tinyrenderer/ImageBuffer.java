@@ -12,7 +12,7 @@ public class ImageBuffer {
         this.width = imgBuf.width;
         this.height = imgBuf.height;
         this.image = new byte[width*height*3];
-        System.arraycopy(imgBuf, 0, this.image, 0, width*height*3);
+        System.arraycopy(imgBuf.image, 0, this.image, 0, width*height*3);
     }
 
     public ImageBuffer(int w, int h) {
@@ -33,8 +33,9 @@ public class ImageBuffer {
         return image;
     }
 
-    public void setPixel(int x, int y, int r, int g, int b) {
-        setRawPixel(x, y, r, g, b);
+    public void setPixel(int x, int y, Color color) {
+        int[] color_array = color.toRGB();
+        setRawPixel(x, y, color_array[0], color_array[1], color_array[2]);
     }
 
     public void setRawPixel(int x, int y, int r, int g, int b) {
