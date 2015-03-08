@@ -107,8 +107,105 @@ public class Canvas extends ImageBuffer {
         }
     }
 
+    public void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
 
-//    public void drawTriange(int x1, int y1, int x2, int y2, int x3, int y3)
+        int[] x_coord = {x1, x2, x3};
+        int[] y_coord = {y1, y2, y3};
+
+        int len = 3;
+
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len-1; j++) {
+                if(y_coord[j] < y_coord[j+1]) {
+                    int bufy = y_coord[j];
+                    y_coord[j] = y_coord[j+1];
+                    y_coord[j+1] = bufy;
+
+                    int bufx = x_coord[j];
+                    x_coord[j] = x_coord[j+1];
+                    x_coord[j+1] = bufx;
+                }
+            }
+        }
+
+        y1 = y_coord[0];
+        y2 = y_coord[1];
+        y3 = y_coord[2];
+
+        x1 = x_coord[0];
+        x2 = x_coord[1];
+        x3 = x_coord[2];
+
+        int dx1 = Math.abs(x1 - x2);
+        int dx2 = Math.abs(x1 - x3);
+        int dy1 = y1 - y2;
+        int dy2 = y1 - y3;
+
+
+        int error1 = dy1/2;
+        int error2 = dy2/2;
+
+        int step_x1 = (x1 < x2) ? 1 : -1;
+        int step_x2 = (x1 < x3) ? 1 : -1;
+
+        int x_i1 = x1;
+        int x_i2 = x1;
+
+        for(int y = y1; y >= y2; y += -1) {
+            swipeLine(x_i1, x_i2, y, color);
+
+            error1 -= dx1;
+            error2 -= dx2;
+            while(error1 <= 0) {
+                x_i1 += step_x1;
+                error1 += dy1;
+            }
+
+            while(error2 <= 0) {
+                x_i2 += step_x2;
+                error2 += dy2;
+            }
+        }
+
+        dx1 = Math.abs(x3 - x_i1);
+        dx2 = Math.abs(x3 - x_i2);
+        dy1 = y2 - y3;
+        dy2 = y2 - y3;
+
+        error1 = dy1/2;
+        error2 = dy2/2;
+
+        step_x1 = (x3 > x_i1) ? 1 : -1;
+        step_x2 = (x3 > x_i2) ? 1 : -1;
+
+        for(int y = y2; y >= y3; y += -1) {
+            swipeLine(x_i1, x_i2, y, color);
+            error1 -= dx1;
+            error2 -= dx2;
+            while(error1 <= 0) {
+                x_i1 += step_x1;
+                error1 += dy1;
+            }
+
+            while(error2 <= 0) {
+                x_i2 += step_x2;
+                error2 += dy2;
+            }
+        }
+
+
+    }
+
+    private void swipeLine(int x1, int x2, int y, Color color) {
+        if (x1 > x2) {
+            int buf = x1;
+            x1 = x2;
+            x2 = buf;
+        }
+        for (int x_j = x1; x_j <= x2; x_j++) {
+            setPixel(x_j, y, color);
+        }
+    }
 
 
 
