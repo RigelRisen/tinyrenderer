@@ -18,6 +18,15 @@ public class ColorRGB implements Color {
         this(0, 0, 0);
     }
 
+    public ColorRGB(double red, double green, double blue) {
+        this(
+            (int) (red   * 255),
+            (int) (green * 255),
+            (int) (blue  * 255)
+        );
+
+    }
+
     public ColorRGB(int red, int green, int blue) {
         this.red    = red;
         this.green  = green;

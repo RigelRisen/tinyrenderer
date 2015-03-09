@@ -40,14 +40,14 @@ public class TestModel {
             Model.Vert v2 = model.getVert(face.vert[1]-1);
             Model.Vert v3 = model.getVert(face.vert[2]-1);
 
-            int x1 = (int) ((v1.get(0)+1)*width/2);
-            int y1 = (int) ((v1.get(1)+1)*height/2);
+            int x1 = (int) ((v1.x+1)*width/2);
+            int y1 = (int) ((v1.y+1)*height/2);
 
-            int x2 = (int) ((v2.get(0)+1)*width/2);
-            int y2 = (int) ((v2.get(1)+1)*height/2);
+            int x2 = (int) ((v2.x+1)*width/2);
+            int y2 = (int) ((v2.y+1)*height/2);
 
-            int x3 = (int) ((v3.get(0)+1)*width/2);
-            int y3 = (int) ((v3.get(1)+1)*height/2);
+            int x3 = (int) ((v3.x+1)*width/2);
+            int y3 = (int) ((v3.y+1)*height/2);
 
             Vec3d norm = v3.sub(v1).multScal(v2.sub(v1)).normalize();
 

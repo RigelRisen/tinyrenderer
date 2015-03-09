@@ -75,6 +75,10 @@ public class Vec3d {
         return new Vec3d(x, y, val);
     }
 
+    public Vec3i toVec3i() {
+        return new Vec3i((int)x, (int)y, (int)z);
+    }
+
     @Override
     public String toString() {
         return "Vec3d{" +
