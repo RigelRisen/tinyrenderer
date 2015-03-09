@@ -151,19 +151,32 @@ public class Canvas extends ImageBuffer {
         int x_i1 = x1;
         int x_i2 = x1;
 
-        for(int y = y1; y >= y2; y += -1) {
-            swipeLine(x_i1, x_i2, y, color);
+        if(dy1 == 0 || dy2 == 0) {
+            x_i1 = x1;
+            x_i2 = x2;
+        } else {
+            for (int y = y1; y > y2; y += -1) {
+                error1 -= dx1;
+                error2 -= dx2;
+                while (error1 < 0) {
+                    x_i1 += step_x1;
+                    error1 += dy1;
+                }
 
-            error1 -= dx1;
-            error2 -= dx2;
-            while(error1 <= 0) {
-                x_i1 += step_x1;
-                error1 += dy1;
-            }
+                while (error2 < 0) {
+                    x_i2 += step_x2;
+                    error2 += dy2;
+                }
 
-            while(error2 <= 0) {
-                x_i2 += step_x2;
-                error2 += dy2;
+                if(step_x1 >= 0) {
+                    if(x_i1 > x2)
+                        x_i1 = x2;
+                } else {
+                    if(x_i1 < x2)
+                        x_i1 = x2;
+                }
+
+                swipeLine(x_i1, x_i2, y, color);
             }
         }
 
@@ -178,21 +191,41 @@ public class Canvas extends ImageBuffer {
         step_x1 = (x3 > x_i1) ? 1 : -1;
         step_x2 = (x3 > x_i2) ? 1 : -1;
 
-        for(int y = y2; y >= y3; y += -1) {
-            swipeLine(x_i1, x_i2, y, color);
-            error1 -= dx1;
-            error2 -= dx2;
-            while(error1 <= 0) {
-                x_i1 += step_x1;
-                error1 += dy1;
-            }
+        if(dy1 == 0 && dy2 == 0) {
+//            swipeLine(x_i1, x_i2, y1, color);
+        } else {
 
-            while(error2 <= 0) {
-                x_i2 += step_x2;
-                error2 += dy2;
+            for (int y = y2; y > y3; y += -1) {
+                error1 -= dx1;
+                error2 -= dx2;
+                while (error1 < 0) {
+                    x_i1 += step_x1;
+                    error1 += dy1;
+                }
+
+                while (error2 < 0) {
+                    x_i2 += step_x2;
+                    error2 += dy2;
+                }
+
+                if(step_x1 >= 0) {
+                    if(x_i1 > x3)
+                        x_i1 = x3;
+                } else {
+                    if(x_i1 < x3)
+                        x_i1 = x3;
+                }
+                if(step_x2 >= 0) {
+                    if(x_i2 > x3)
+                        x_i2 = x3;
+                } else {
+                    if(x_i2 < x3)
+                        x_i2 = x3;
+                }
+
+                swipeLine(x_i1, x_i2, y, color);
             }
         }
-
 
     }
 
@@ -203,7 +236,11 @@ public class Canvas extends ImageBuffer {
             x2 = buf;
         }
         for (int x_j = x1; x_j <= x2; x_j++) {
-            setPixel(x_j, y, color);
+            try {
+                setPixel(x_j, y, color);
+            } catch (IndexOutOfBoundsException e) {
+//                skip pixels out of image
+            }
         }
     }
 

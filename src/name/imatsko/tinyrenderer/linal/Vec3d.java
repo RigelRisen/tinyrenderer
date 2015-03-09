@@ -40,6 +40,10 @@ public class Vec3d {
     }
 
 
+    public double dotProduct(Vec3d otherVec) {
+        return vec[0]*otherVec.vec[0] + vec[1]*otherVec.vec[1] + vec[2]*otherVec.vec[2];
+    }
+
     public Vec3d mult(Vec3d otherVec) {
         return new Vec3d(vec[0]*otherVec.vec[0], vec[1]*otherVec.vec[1], vec[2]*otherVec.vec[2]);
     }
